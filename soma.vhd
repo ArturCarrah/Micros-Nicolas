@@ -4,8 +4,8 @@ use IEE.numeric_std.all;
 
 entity full_adder is
 port(
-  a, b, cin: in BIT;
-  s, cout: out BIT);
+  a, b, cin: in std_logic;
+  s, cout: out std_logic);
 
 end full_adder;
 
