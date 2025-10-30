@@ -17,12 +17,15 @@ architecture main of testbench is
         process
         begin
             v_tb <= "00000101";
+          	assert(v_tb=rout_tb) report "Fail" severity error;
             wait for 10 ns;
 
             v_tb <= "00001111";
+            assert(v_tb=rout_tb) report "Fail" severity error;
             wait for 10 ns;
 
             v_tb <= "00110101";
+            assert(v_tb=rout_tb) report "Fail" severity error;
             wait for 10 ns;
 
             wait;
