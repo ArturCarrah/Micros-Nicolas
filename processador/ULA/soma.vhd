@@ -19,7 +19,10 @@ end dataflow;
 
  -- teste bench dessa soma nada heterosexual (eu acho que funciona assim, testei separados no eda e deu bom, se tiver erro mim ensinem dpois)
 
-  entity tb_full_adder is
+library IEEE;
+use IEEE.std_logic_1164.all;
+
+entity tb_full_adder is
 end tb_full_adder;
 
 architecture sim of tb_full_adder is
@@ -41,34 +44,51 @@ begin
         -- Teste 1: 0 + 0 + 0 = 00
         a <= '0'; b <= '0'; cin <= '0';
         wait for 10 ns;
+        assert(s='0') report "Fail 0/0/0 saida" severity error;
+        assert(cout='0') report "Fail 0/0/0 cout" severity error;
 
         -- Teste 2: 0 + 0 + 1 = 01
         a <= '0'; b <= '0'; cin <= '1';
         wait for 10 ns;
+        assert(s='1') report "Fail 0/0/1 saida" severity error;
+        assert(cout='0') report "Fail 0/0/1 cout" severity error;
 
         -- Teste 3: 0 + 1 + 0 = 01
         a <= '0'; b <= '1'; cin <= '0';
         wait for 10 ns;
+        assert(s='1') report "Fail 0/1/0 saida" severity error;
+        assert(cout='0') report "Fail 0/1/0 cout" severity error;
 
         -- Teste 4: 0 + 1 + 1 = 10
         a <= '0'; b <= '1'; cin <= '1';
         wait for 10 ns;
+        assert(s='0') report "Fail 0/1/1 saida" severity error;
+        assert(cout='1') report "Fail 0/1/1 cout" severity error;
 
         -- Teste 5: 1 + 0 + 0 = 01
         a <= '1'; b <= '0'; cin <= '0';
         wait for 10 ns;
+        assert(s='1') report "Fail 1/0/0 saida" severity error;
+        assert(cout='0') report "Fail 1/0/0 cout" severity error;
 
         -- Teste 6: 1 + 0 + 1 = 10
         a <= '1'; b <= '0'; cin <= '1';
         wait for 10 ns;
+        assert(s='0') report "Fail 1/0/1 saida" severity error;
+        assert(cout='1') report "Fail 1/0/1 cout" severity error;
 
         -- Teste 7: 1 + 1 + 0 = 10
         a <= '1'; b <= '1'; cin <= '0';
         wait for 10 ns;
+        assert(s='0') report "Fail 1/1/0 saida" severity error;
+        assert(cout='1') report "Fail 1/1/0 cout" severity error;
 
         -- Teste 8: 1 + 1 + 1 = 11
         a <= '1'; b <= '1'; cin <= '1';
         wait for 10 ns;
+        assert(s='1') report "Fail 1/1/1 saida" severity error;
+        assert(cout='1') report "Fail 1/1/1 cout" severity error;
+        
         wait; 
     end process;
 end sim;
