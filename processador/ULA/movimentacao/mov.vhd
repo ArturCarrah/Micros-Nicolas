@@ -11,9 +11,7 @@ entity mov is
 end entity mov;
 
 architecture main of mov is
-    begin
-        process
-        begin
-            rout <= v;
-        end process;
+begin
+	rout <= v;
+    
 end main;
