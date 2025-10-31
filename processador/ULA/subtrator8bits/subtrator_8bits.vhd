@@ -9,27 +9,27 @@ entity subtrator_8bits is
         cin     : in std_logic;
 
         s       : out std_logic_vector(7 downto 0);
-        cout    : out std_logic;
+        cout    : out std_logic
     );
 end entity subtrator_8bits;
 
 architecture main of subtrator_8bits is
     signal carry : std_logic_vector(6 downto 0);
     component full_adder is
-        b <= not b;
-        b <= b + 1;
         port (
             a, b, cin   : in std_logic;
             s, cout     : out std_logic;
         );
     end component;
     begin
-        a0 : full_adder port map (a(0), b(0), cin, s(0), carry(0));
-        a1 : full_adder port map (a(1), b(1), carry(0), s(1), carry(1));
-        a2 : full_adder port map (a(2), b(2), carry(1), s(2), carry(2));
-        a3 : full_adder port map (a(3), b(3), carry(2), s(3), carry(3));
-        a4 : full_adder port map (a(4), b(4), carry(3), s(4), carry(4));
-        a5 : full_adder port map (a(5), b(5), carry(4), s(5), carry(5));
-        a6 : full_adder port map (a(6), b(6), carry(5), s(6), carry(6));
-        a7 : full_adder port map (a(7), b(7), carry(6), s(7), cout);
+    B_comp <= std_logic_vector(unsigned(not b) + 1);
+
+    a0 : full_adder port map(a(0), B_comp(0), cin, s(0), carry(0));
+    a1 : full_adder port map(a(1), B_comp(1), carry(0), s(1), carry(1));
+    a2 : full_adder port map(a(2), B_comp(2), carry(1), s(2), carry(2));
+    a3 : full_adder port map(a(3), B_comp(3), carry(2), s(3), carry(3));
+    a4 : full_adder port map(a(4), B_comp(4), carry(3), s(4), carry(4));
+    a5 : full_adder port map(a(5), B_comp(5), carry(4), s(5), carry(5));
+    a6 : full_adder port map(a(6), B_comp(6), carry(5), s(6), carry(6));
+    a7 : full_adder port map(a(7), B_comp(7), carry(6), s(7), cout);
     end main;
