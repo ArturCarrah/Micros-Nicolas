@@ -1,124 +1,109 @@
-------------------------------------------------------------
--- Porta XOR
-------------------------------------------------------------
+-- XOR
 
 library IEEE;
 use IEEE.std_logic_1164.all;
 
 entity xor_manual is
   port (
-    a, b : in std_logic;
-    y    : out std_logic
+    a, b : in  std_logic_vector(7 downto 0);
+    y    : out std_logic_vector(7 downto 0)
   );
 end xor_manual;
 
-architecture truth_table of xor_manual is
+architecture manual of xor_manual is
 begin
-  process(a, b)
-  begin
-    if a = b then
-      y <= '0';
-    else
-      y <= '1';
-    end if;
-  end process;
-end truth_table;
+  -- XOR bit a bit usando lógica
+  y(0) <= (a(0) and not b(0)) or (not a(0) and b(0));
+  y(1) <= (a(1) and not b(1)) or (not a(1) and b(1));
+  y(2) <= (a(2) and not b(2)) or (not a(2) and b(2));
+  y(3) <= (a(3) and not b(3)) or (not a(3) and b(3));
+  y(4) <= (a(4) and not b(4)) or (not a(4) and b(4));
+  y(5) <= (a(5) and not b(5)) or (not a(5) and b(5));
+  y(6) <= (a(6) and not b(6)) or (not a(6) and b(6));
+  y(7) <= (a(7) and not b(7)) or (not a(7) and b(7));
+end manual;
 
-------------------------------------------------------------
 -- Porta AND
-------------------------------------------------------------
 
 library IEEE;
 use IEEE.std_logic_1164.all;
 
-entity and_manual is 
+entity and_manual is
   port (
-    a, b : in std_logic;
-    y    : out std_logic
+    a, b : in  std_logic_vector(7 downto 0);
+    y    : out std_logic_vector(7 downto 0)
   );
 end and_manual;
 
-architecture truth_table of and_manual is
+architecture manual of and_manual is
 begin
-  process(a, b)
-  begin
-    if a = '1' then
-        if b = '1' then
-            y <= '1';
-        end if;
-    else
-      y <= '0';
-    end if;
-  end process;
-end truth_table;
+  y(0) <= a(0) and b(0);
+  y(1) <= a(1) and b(1);
+  y(2) <= a(2) and b(2);
+  y(3) <= a(3) and b(3);
+  y(4) <= a(4) and b(4);
+  y(5) <= a(5) and b(5);
+  y(6) <= a(6) and b(6);
+  y(7) <= a(7) and b(7);
+end manual;
 
-------------------------------------------------------------
--- Porta OR
-------------------------------------------------------------
+-- OR
 
 library IEEE;
 use IEEE.std_logic_1164.all;
 
-entity or_manual is 
+entity or_manual is
   port (
-    a, b : in std_logic;
-    y    : out std_logic
+    a, b : in  std_logic_vector(7 downto 0);
+    y    : out std_logic_vector(7 downto 0)
   );
 end or_manual;
 
-architecture truth_table of or_manual is
+architecture manual of or_manual is
 begin
-  process(a, b)
-  begin
-    if a = '1' then
-      y <= '1';
-    elsif b = '1' then
-      y <= '1';
-    else 
-      y <= '0';
-    end if;
-  end process;
-end truth_table;
+  y(0) <= a(0) or b(0);
+  y(1) <= a(1) or b(1);
+  y(2) <= a(2) or b(2);
+  y(3) <= a(3) or b(3);
+  y(4) <= a(4) or b(4);
+  y(5) <= a(5) or b(5);
+  y(6) <= a(6) or b(6);
+  y(7) <= a(7) or b(7);
+end manual;
 
-------------------------------------------------------------
--- Porta NOT
-------------------------------------------------------------
+-- NOT
 
 library IEEE;
 use IEEE.std_logic_1164.all;
 
 entity not_manual is
   port (
-    a : in std_logic;
-    y : out std_logic
+    a : in  std_logic_vector(7 downto 0);
+    y : out std_logic_vector(7 downto 0)
   );
 end not_manual;
 
-architecture truth_table of not_manual is
+architecture manual of not_manual is
 begin
-  process(a)
-  begin
-    if a = '1' then
-      y <= '0';
-    else
-      y <= '1';
-    end if;
-  end process;
-end truth_table;
+  y(0) <= not a(0);
+  y(1) <= not a(1);
+  y(2) <= not a(2);
+  y(3) <= not a(3);
+  y(4) <= not a(4);
+  y(5) <= not a(5);
+  y(6) <= not a(6);
+  y(7) <= not a(7);
+end manual;
 
-------------------------------------------------------------
--- Testbanch das portas
-------------------------------------------------------------
+-- Testbanch 
 
 library IEEE;
 use IEEE.std_logic_1164.all;
 
 entity tb_portas is
 end tb_portas;
-
 architecture sim of tb_portas is
 
-    -- Sinais para todas as portas
     signal a, b   : std_logic := '0';
     signal y_and  : std_logic;
     signal y_or   : std_logic;
@@ -126,10 +111,6 @@ architecture sim of tb_portas is
     signal y_not  : std_logic;
 
 begin
-
-    -----------------------------------------------------------------
-    -- Instanciações
-    -----------------------------------------------------------------
     uut_and : entity work.and_manual
         port map (a => a, b => b, y => y_and);
 
@@ -141,12 +122,9 @@ begin
 
     uut_not : entity work.not_manual
         port map (a => a, y => y_not);
-
-    -----------------------------------------------------------------
-    -- Processo de estimulação e verificação
-    -----------------------------------------------------------------
     stim_proc : process
     begin
+      
         -- Teste 1
         a <= '0'; b <= '0'; wait for 10 ns;
         report "a=0, b=0 => AND=" & std_logic'image(y_and) &
