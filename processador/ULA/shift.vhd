@@ -13,10 +13,10 @@ architecture RTL of bitshift is
 begin
   process (shift, inp)
   begin
-    if shift = '0' then
-      outp <= inp(6 downto 0) & '0';
+    if shift = '1' then
+      outp <= inp(6 downto 0) & '0'; --left
     else
-      outp <= '0' & inp(7 downto 1);  
+      outp <= '0' & inp(7 downto 1); --right
     end if;
   end process;
 end RTL;
@@ -44,12 +44,12 @@ begin
     process
     begin
         -- Teste 1: Shift Left
-        inp <= "01010001"; shift <= '0';
+        inp <= "01010001"; shift <= '1';
         wait for 10 ns;
         assert(outp = "10100010") report "Fail shl saida" severity error;
 
         -- Teste 2: Shift Right
-        inp <= "01010001"; shift <= '1';
+        inp <= "01010001"; shift <= '0';
         wait for 10 ns;
         assert(outp = "00101000") report "Fail shr saida" severity error;
         
