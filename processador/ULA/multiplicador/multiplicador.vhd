@@ -7,7 +7,7 @@ entity multiplicador is
         a : in std_logic_vector(7 downto 0);
         b : in std_logic_vector(7 downto 0);
 
-        s : out std_logic_vector(15 downto 0)
+        s : out std_logic_vector(7 downto 0)
     );
 end entity multiplicador;
 
@@ -28,7 +28,7 @@ begin
             parcial(j) <= a(j) and b(i);
         end generate;
 
-        uut_teste : entity work.teste
+        uut_teste1 : entity work.mshift
             port map(
                 a => parcial,
                 shift => i,
@@ -41,7 +41,7 @@ begin
 
     gen_i1 : for i in 0 to 3 generate
     begin
-        uut_teste : entity work.fadder_16bits
+        uut_teste2 : entity work.fadder_16bits
             port map(
                 a => s0((2*i*16+15) downto (2*i*16)),
                 b => s0(((2*i+1)*16 + 15) downto ((2*i+1)*16)),
@@ -53,7 +53,7 @@ begin
 
     gen_i2 : for i in 0 to 1 generate
     begin
-        uut_teste : entity work.fadder_16bits
+        uut_teste3 : entity work.fadder_16bits
             port map(
                 a => s1((2*i*16+15) downto (2*i*16)),
                 b => s1(((2*i+1)*16 + 15) downto ((2*i+1)*16)),
@@ -72,7 +72,6 @@ begin
             s => s3
     );
 
-
-    s <= s3;
+    s <= s3(7 downto 0); -- Criar lógica para overflow;
 
 end architecture main;

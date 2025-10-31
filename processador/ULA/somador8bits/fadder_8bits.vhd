@@ -9,7 +9,7 @@ entity fadder_8bits is
         cin     : in std_logic;
 
         s       : out std_logic_vector(7 downto 0);
-        cout    : out std_logic;
+        cout    : out std_logic
     );
 end entity fadder_8bits;
 
@@ -18,7 +18,7 @@ architecture main of fadder_8bits is
     component full_adder is
         port (
             a, b, cin   : in std_logic;
-            s, cout     : out std_logic;
+            s, cout     : out std_logic
         );
     end component;
     begin
