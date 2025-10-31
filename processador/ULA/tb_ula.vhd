@@ -2,10 +2,10 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
-entity tb_ula is
-end tb_ula;
+entity testbench is
+end testbench;
 
-architecture sim of tb_ula is
+architecture sim of testbench is
     -- Component da ULA
     component ula is
         port (
@@ -38,14 +38,16 @@ begin
             r         => r_tb
         );
 
-    -- Geração do clock
-    clk_process : process
-    begin
-        clk_tb <= '0';
-        wait for CLK_PERIOD/2;
-        clk_tb <= '1';
-        wait for CLK_PERIOD/2;
-    end process;
+        clock_gen: process
+        begin
+            for i in 0 to 40 loop  -- 40 ciclos de clock
+                clk_tb <= '0';
+                wait for 5 ns;
+                clk_tb <= '1';
+                wait for 5 ns;
+            end loop;
+            wait; -- encerra o processo
+        end process;
 
     -- Estímulos
     stim_proc : process
@@ -54,22 +56,22 @@ begin
         operation_tb <= "00000100";
         op1_tb <= "00001010"; -- 10
         op2_tb <= "00000101"; -- 5
-        wait for CLK_PERIOD;
+        wait until rising_edge(clk_tb);
         
         -- Teste 2: operação MUL ("00000110")
         operation_tb <= "00000110";
         op1_tb <= "00000011"; -- 3
         op2_tb <= "00000100"; -- 4
-        wait for CLK_PERIOD;
+       	wait until rising_edge(clk_tb);
 
         -- Teste 3: operação ADD novamente
         operation_tb <= "00000100";
         op1_tb <= "00001111"; -- 15
         op2_tb <= "00000001"; -- 1
-        wait for CLK_PERIOD;
-
+        wait until rising_edge(clk_tb);
+        
         -- Finaliza simulação
         wait for 20 ns;
-        assert false report "Fim da simulação." severity failure;
+        wait;
     end process;
 end sim;
