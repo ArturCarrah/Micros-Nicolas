@@ -16,7 +16,6 @@ s <= a xor b xor cin;
 cout <= (a and b) OR (a and cin) or (b and cin);
   
 end dataflow;
-
  -- teste bench dessa soma nada heterosexual (eu acho que funciona assim, testei separados no eda e deu bom, se tiver erro mim ensinem dpois)
 
 library IEEE;
