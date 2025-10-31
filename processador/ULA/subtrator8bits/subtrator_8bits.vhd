@@ -15,6 +15,8 @@ end entity subtrator_8bits;
 
 architecture main of subtrator_8bits is
     signal carry : std_logic_vector(6 downto 0);
+    signal B_comp  : std_logic_vector(7 downto 0);
+    
     component full_adder is
         port (
             a, b, cin   : in std_logic;
