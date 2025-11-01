@@ -26,13 +26,13 @@ begin
         while not endfile(instruction_file) loop
             readline(instruction_file, line_in);
             
-      		read(line_in, opcode);  --Lendo opcode (dado guardado na variavel opcode)
+      		read(line_in, opcode);  --Lendo opcode (dado guardado na variavel opcod
       		read(line_in, op1);     --Lendo primeiro dado (dado em op1)
       		read(line_in, op2);     --Lendo segundo dado  (dado em op2)
       		read(line_in, op3);     --Lendo terceiro dado  (dado em op3)
        
         end loop;
-
+e)
         wait;
     end process;
 end architecture;

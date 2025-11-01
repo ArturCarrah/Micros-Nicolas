@@ -5,7 +5,7 @@ use IEEE.numeric_std.all;
 entity register_file is
     port (
         clk     : in std_logic;
-        re      : in std_logic;
+        rst     : in std_logic;
         we      : in std_logic;
 
         addr    : in    std_logic_vector(2 downto 0);
@@ -16,8 +16,8 @@ entity register_file is
         r2      : out std_logic_vector(7 downto 0); -- USO GERAL
         r3      : out std_logic_vector(7 downto 0); -- USO GERAL
         r4      : out std_logic_vector(7 downto 0); -- Registrador padrão de Operações da ULA
-        r5      : out std_logic_vector(7 downto 0);
-        r6      : out std_logic_vector(7 downto 0);
+        r5      : out std_logic_vector(7 downto 0); -- 
+        r6      : out std_logic_vector(7 downto 0); -- Registrador de instrucao
         r7      : out std_logic_vector(7 downto 0) -- Registrador de flag
     );
 end register_file;
@@ -28,10 +28,10 @@ architecture main of register_file is
     signal addr_int : integer range 0 to 7;
     begin
     	addr_int <= to_integer(unsigned(addr));
-        process(clk, re)
+        process(clk, rst)
         begin
 
-            if (re = '0') then 
+            if (rst = '0') then 
                 regs <= (others => (others => '0'));
 
             elsif (rising_edge(clk)) then 

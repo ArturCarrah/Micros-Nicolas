@@ -1,3 +1,4 @@
-ADD R4, R3, #0x0ff ; R4 = R1 + R2
-MOV R4, #5
-ADD R3, R4, #5
+MOV R7, #0xA
+MOV R6, #0x2
+MUL R7, R6, R5
+
