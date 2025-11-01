@@ -3,23 +3,27 @@ use ieee.std_logic_1164.all;
 
 entity bitshift is
   port (
-    inp  : in  std_logic_vector(7 downto 0);
-    shift: in  std_logic;
-    outp : out std_logic_vector(7 downto 0)
+    clk   : in  std_logic;
+    inp   : in  std_logic_vector(7 downto 0);
+    shift : in  std_logic;
+    outp  : out std_logic_vector(7 downto 0)
   );
 end bitshift;
 
 architecture RTL of bitshift is
 begin
-  process (shift, inp)
+  process (clk)
   begin
-    if shift = '1' then
-      outp <= inp(6 downto 0) & '0'; --left
-    else
-      outp <= '0' & inp(7 downto 1); --right
+    if rising_edge(clk) then
+      if shift = '1' then
+        outp <= inp(6 downto 0) & '0'; -- left
+      else
+        outp <= '0' & inp(7 downto 1); -- right
+      end if;
     end if;
   end process;
 end RTL;
+
 
 -- Testbench 
 
