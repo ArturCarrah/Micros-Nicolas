@@ -14,13 +14,15 @@ end ula;
 
 architecture main of ula is
 
-    -- Sinais auxiliares para armazenar resultados das operações
+  
     signal r_mov, r_add, r_mul, r_xor, r_and, r_or, r_not, r_bs : std_logic_vector(7 downto 0);
     signal shift : std_logic;
     signal r_s, r_g, r_e : std_logic;
     signal r_div, r_mod : std_logic_vector(7 downto 0);
     signal flag_div     : std_logic;
     signal reset        : std_logic := '0';
+	signal r_sub : std_logic_vector(7 downto 0);
+	signal cout_sub : std_logic;
 
 begin
 
@@ -39,8 +41,18 @@ begin
             cin => '0',
             s   => r_add
         );
+        
+    -- SUBTRACAO
+    isub: entity work.subtrator_8bits
+        port map(
+            a    => op1,
+        	b    => op2,
+        	cin  => '1',
+        	s    => r_sub,
+        	cout => cout_sub
+        );
 
-    -- MULTIPLICAÇÃO
+    -- MUL
     imul: entity work.multiplicador 
         port map (
             a   => op1,
@@ -48,15 +60,13 @@ begin
             s   => r_mul
         );
 
-    idiv: entity work.div_mod
+	-- DIV/MOD
+    idiv: entity work.DIVISION
         port map (
-            div_output => r_div,
-            mod_output => r_mod,
-            flag       => flag_div,
-            input_A    => op1,
-            input_B    => op2,
-            clock      => clk,
-            reset      => reset
+            Q => r_div,
+            R => r_mod,
+            A => op1,
+            B => op2
         );            
 
     -- XOR
@@ -93,12 +103,13 @@ begin
     -- SHIFT (assumindo bitshift com direção controlada por 'shift')
     ishift: entity work.bitshift 
         port map (
+        	clk => clk,
             inp   => op1,
             shift => shift,
             outp  => r_bs
         );
-
-    icomparador: entity work.comparador_8bits
+	-- COMPARADOR
+    icomparador: entity work.comparador
         port map (
             a  => op1,
             b  => op2,
@@ -116,16 +127,18 @@ begin
                     r <= r_mov;
 
                 when "00000010" =>   -- SHIFT ESQUERDA
-                    shift <= '0';
+                    shift <= '1';
                     r <= r_bs;
 
                 when "00000011" =>   -- SHIFT DIREITA
-                    shift <= '1';
+                    shift <= '0';
                     r <= r_bs;
 
                 when "00000100" =>   -- ADD
                     r <= r_add;
-
+                    
+                when "00000101" =>   -- SUB
+					r <= r_sub;
                 when "00000110" =>   -- MUL
                     r <= r_mul;
 
@@ -133,7 +146,7 @@ begin
                     r <= r_div;
 
                 when "00001000" =>   -- RESTO
-                    r <= r_mod
+                    r <= r_mod;
 
                 when "00001001" =>   -- COMP
                     if r_s = '1' then
