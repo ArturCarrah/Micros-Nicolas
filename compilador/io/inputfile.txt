@@ -1,4 +1,4 @@
-MOV R7, #0xA
-MOV R6, #0x2
-MUL R7, R6, R5
+MOV R1, #5
+MOV R2, #3
+ADD R3, R1, R2
 
