@@ -47,7 +47,7 @@ begin
         port map(
             a    => op1,
         	b    => op2,
-        	cin  => '1',
+        	cin  => '0',
         	s    => r_sub,
         	cout => cout_sub
         );
@@ -103,7 +103,6 @@ begin
     -- SHIFT (assumindo bitshift com direção controlada por 'shift')
     ishift: entity work.bitshift 
         port map (
-        	clk => clk,
             inp   => op1,
             shift => shift,
             outp  => r_bs
@@ -178,4 +177,3 @@ begin
     end process;
 
 end main;
-
