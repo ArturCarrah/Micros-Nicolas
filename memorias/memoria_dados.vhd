@@ -53,7 +53,6 @@ begin
         end if;
     end process;
 
-    -- Leitura da memória
     data_out <= memoria(addr_int);
 
 end architecture;
