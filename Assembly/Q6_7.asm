@@ -59,7 +59,7 @@ RETURN:
 
 	// Busca Binária
 	
-	mov r2, #54543 // Elemento a ser encontrado
+	mov r2, #44353 // Elemento a ser encontrado
 	mov r3, #0 // Esquerda
 	mov r4, #6 // Direita
 	
@@ -83,9 +83,11 @@ WHILE:
 	
 	// Se não existe elemento, retorne -1
 	cmp r3, r4
-	movge r0, #0
-	subge r0, r0, #1
-	bge FIM
+	movgt r0, #0
+	subgt r0, r0, #1
+	bgt FIM
+	
+	
 	
 	b WHILE
 	
